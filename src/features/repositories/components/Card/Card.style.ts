@@ -1,9 +1,27 @@
 import  styled from  'styled-components' ;
 
-export const Card = styled.article`
-  border-radius: 15px;
-  position: relative;
-  overflow: hidden;
+export const CardLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+  
+  &:focus {
+    outline: 3px solid #FF6700;
+    outline-offset: 2px;
+    border-radius: 15px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 3px solid #FF6700;
+    outline-offset: 2px;
+    border-radius: 15px;
+  }
+  
   &:hover {
     .card-header img {
       display: none;
@@ -12,6 +30,12 @@ export const Card = styled.article`
       min-height: 240px;
     }
   }
+`;
+
+export const Card = styled.article`
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
 `
 
 export const CardHeader = styled.div<{ $bgColor: string }>`

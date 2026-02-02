@@ -37,23 +37,36 @@ export default async function RepositoriesPage({ searchParams }: PageProps) {
   }
 
   return (
-    <main>
-      <Header>
+    <main id="main-content" role="main">
+      <Header role="banner">
         <Title>
           <strong>Itaú GitHub</strong> <span>Repository Search</span>
         </Title>
-        <img src="/github.png" alt="Logo" width={60} height={60} />
+        <img 
+          src="/github.png" 
+          alt="Logo do GitHub" 
+          width={60} 
+          height={60}
+        />
       </Header>
 
       <SearchForm initialQuery={query} />
       
-      <Results>
+      <Results 
+        role="region" 
+        aria-label="Resultados da busca"
+        aria-live="polite"
+      >
         {query && <RepositoryCount total={totalCount} />}
 
         {query ? (
           <RepositoryList repositories={repositories} />
         ) : (
-          <p style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+          <p 
+            style={{ textAlign: 'center', padding: '40px', color: '#666' }}
+            role="status"
+            tabIndex={0}
+          >
             Busque por repositórios para começar
           </p>
         )}
@@ -68,4 +81,5 @@ export default async function RepositoriesPage({ searchParams }: PageProps) {
       </Results>
     </main>
   );
+}
 }

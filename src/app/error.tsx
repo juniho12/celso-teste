@@ -9,10 +9,20 @@ interface Props {
 
 export default function Error({ error, reset }: Props) {
   return (
-    <ErrorContainer>
-      <h2>Algo deu errado 😢</h2>
-      <p>{error.message}</p>
-      <button onClick={reset}>Tentar novamente</button>
+    <ErrorContainer 
+      role="alert" 
+      aria-live="assertive"
+      aria-labelledby="error-title"
+      aria-describedby="error-message"
+    >
+      <h2 id="error-title">Algo deu errado 😢</h2>
+      <p id="error-message">{error.message}</p>
+      <button 
+        onClick={reset}
+        aria-label="Tentar carregar a página novamente"
+      >
+        Tentar novamente
+      </button>
     </ErrorContainer>
   );
 }

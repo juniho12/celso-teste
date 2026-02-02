@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { PaginationContainer } from "./Pagination.style";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Props {
   currentPage: number;
@@ -17,27 +18,40 @@ export default function Pagination({
   const router = useRouter();
 
   function goToPage(page: number) {
-    router.push(`/?q=${query}&page=${page}`);
+    router.push(`/?q=${encodeURIComponent(query)}&page=${page}`);
   }
 
   return (
-    <PaginationContainer>
+    <PaginationContainer
+      role="navigation"
+      aria-label="Navegação de páginas de resultados"
+    >
       <button
         disabled={currentPage <= 1}
         onClick={() => goToPage(currentPage - 1)}
+        aria-label={`Ir para página anterior (página ${currentPage - 1})`}
+        aria-disabled={currentPage <= 1}
       >
-        Anterior
+        <ChevronLeft aria-hidden="true" size={18} />
+        <span>Anterior</span>
       </button>
 
-      <span>
-        Página {currentPage} de {totalPages}
+      <span 
+        aria-current="page"
+        aria-label={`Página ${currentPage} de ${totalPages}`}
+        role="status"
+      >
+        Página <strong>{currentPage}</strong> de <strong>{totalPages}</strong>
       </span>
 
       <button
         disabled={currentPage >= totalPages}
         onClick={() => goToPage(currentPage + 1)}
+        aria-label={`Ir para próxima página (página ${currentPage + 1})`}
+        aria-disabled={currentPage >= totalPages}
       >
-        Próxima
+        <span>Próxima</span>
+        <ChevronRight aria-hidden="true" size={18} />
       </button>
     </PaginationContainer>
   );

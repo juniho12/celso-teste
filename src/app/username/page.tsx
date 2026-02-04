@@ -17,6 +17,7 @@ export default function UsernamePage() {
     data,
     loading,
     error,
+    isOffline,
     searchUser,
     sortOptions,
     setSortOptions,
@@ -28,6 +29,10 @@ export default function UsernamePage() {
   return (
     <Container>
       <Title>GitHub User Search</Title>
+      
+      {isOffline && !data && (
+        <ErrorMessage>⚠️ Você está offline. Busque por usuários já pesquisados anteriormente.</ErrorMessage>
+      )}
       
       <SearchForm onSearch={searchUser} loading={loading} />
 
@@ -46,7 +51,6 @@ export default function UsernamePage() {
             onFilterChange={setFilterTerm}
             repositoryCount={filteredAndSortedRepos.length}
           />
-
           <RepositoryList repositories={filteredAndSortedRepos} />
         </>
       )}

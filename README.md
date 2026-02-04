@@ -1,228 +1,165 @@
-# 🔍 GitHub Repository Search
+# 🚀 GitHub Explorer
 
-Aplicação web desenvolvida em Next.js para busca e visualização de repositórios do GitHub com interface intuitiva e paginação.
+Aplicação web para busca de repositórios e perfis de usuários do GitHub.
 
-## 📋 Sobre o Projeto
+## 📋 Sobre
 
-Esta aplicação permite aos usuários pesquisar repositórios no GitHub através da API pública, visualizando informações detalhadas como descrição, linguagem de programação, número de estrelas, forks e issues abertas. A aplicação conta com paginação, limite de requisições e design responsivo.
+Duas funcionalidades principais:
+- **Busca de Repositórios**: Pesquisa com paginação
+- **Perfis de Usuários**: Visualização completa com filtros e ordenação
 
-## ✨ Funcionalidades
+## 🛠️ Stack
 
-- 🔎 **Busca de Repositórios**: Pesquisa em tempo real usando a API do GitHub
-- 📄 **Paginação**: Navegação facilitada entre páginas de resultados (8 itens por página)
-- 📊 **Informações Detalhadas**: Visualização de estatísticas dos repositórios
-- 🎨 **Interface Responsiva**: Design adaptável para diferentes tamanhos de tela
-- ⚡ **Rate Limiting**: Controle de requisições para evitar limite da API
-- 🔄 **Loading States**: Feedback visual durante carregamento
-- 🚨 **Error Handling**: Tratamento de erros com mensagens amigáveis
+- **Next.js 16** + **React 19** + **TypeScript**
+- **Styled Components** (CSS-in-JS)
+- **Axios** (HTTP client)
+- **Jest** + **React Testing Library**
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Quick Start
 
-- **[Next.js 16.1.6](https://nextjs.org/)** - Framework React com SSR
-- **[React 19.2.3](https://react.dev/)** - Biblioteca para interfaces de usuário
-- **[TypeScript 5](https://www.typescriptlang.org/)** - Tipagem estática
-- **[Styled Components 6.3.8](https://styled-components.com/)** - CSS-in-JS
-- **[Axios 1.13.4](https://axios-http.com/)** - Cliente HTTP
-- **[Lucide React 0.563.0](https://lucide.dev/)** - Biblioteca de ícones
-- **[ESLint](https://eslint.org/)** - Linter para qualidade de código
+# Instale as dependências
+npm install
+
+# Execute em desenvolvimento
+npm run dev
+```
+
+Acesse: [http://localhost:3000](http://localhost:3000)
+
+### Scripts Disponíveis
+
+```bash
+npm run dev           # Desenvolvimento
+npm run build         # Build produção
+npm start             # Servidor produção
+npm test              # Testes
+npm run test:watch    # Testes (watch mode)
+npm run test:coverage # Cobertura de testes
+npm run lint          # ESLint
+```
 
 ## 📁 Estrutura do Projeto
 
 ```
-celso-teste/
-├── src/
-│   ├── app/                          # App Router do Next.js
-│   │   ├── page.tsx                  # Página principal
-│   │   ├── layout.tsx                # Layout raiz
-│   │   ├── loading.tsx               # Estado de loading
-│   │   ├── error.tsx                 # Página de erro
-│   │   ├── globals.css               # Estilos globais
-│   │   └── Global.style.ts           # Componentes estilizados globais
-│   │
-│   ├── features/
-│   │   └── repositories/             # Feature de repositórios
-│   │       ├── components/           # Componentes React
-│   │       │   ├── Card/             # Card individual de repositório
-│   │       │   ├── Count/            # Contador de resultados
-│   │       │   ├── List/             # Lista de repositórios
-│   │       │   ├── Loading/          # Skeleton loading
-│   │       │   ├── Pagination/       # Componente de paginação
-│   │       │   └── SearchForm/       # Formulário de busca
-│   │       ├── hooks/                # React Hooks customizados
-│   │       │   └── useRepositories.ts
-│   │       ├── mappers/              # Mapeamento de dados
-│   │       │   └── repository.mapper.ts
-│   │       ├── services/             # Lógica de negócio
-│   │       │   └── repositorySearch.service.ts
-│   │       ├── types/                # Definições TypeScript
-│   │       │   └── repository.ts
-│   │       └── utils/                # Funções utilitárias
-│   │           ├── const.tsx
-│   │           └── utils.tsx
-│   │
-│   └── services/
-│       └── http/                     # Configuração HTTP
-│           └── repositorySearchClient.ts  # Cliente Axios com rate limiter
+src/
+├── app/                    # Rotas Next.js (App Router)
+│   ├── page.tsx           # Página inicial
+│   ├── layout.tsx         # Layout raiz
+│   ├── registry.tsx       # Styled Components Registry
+│   ├── repositories/      # Rota /repositories
+│   └── username/          # Rota /username
 │
-├── public/                           # Arquivos estáticos
-├── package.json                      # Dependências do projeto
-├── tsconfig.json                     # Configuração TypeScript
-├── next.config.ts                    # Configuração Next.js
-└── eslint.config.mjs                 # Configuração ESLint
+├── features/              # Features da aplicação
+│   ├── repositories/      # Feature de busca de repositórios
+│   │   ├── components/    # Componentes React + estilos
+│   │   ├── hooks/         # Custom hooks
+│   │   ├── services/      # API calls
+│   │   ├── mappers/       # Transformação de dados
+│   │   ├── types/         # TypeScript types
+│   │   └── utils/         # Funções auxiliares
+│   │
+│   └── username/          # Feature de perfis de usuários
+│       ├── components/
+│       ├── hooks/
+│       ├── services/
+│       ├── mappers/
+│       ├── types/
+│       └── utils/
+│
+├── shared/                # Recursos compartilhados
+│   └── services/
+│       └── http/
+│           └── githubClient.ts  # Cliente HTTP + rate limiter
+│
+└── services/              # Services específicos (legacy)
+    └── http/
 ```
 
-## 🚀 Como Executar o Projeto
+## 🏗️ Arquitetura
 
-### Pré-requisitos
+### Feature-Based
+Cada feature é auto-contida com:
+- **components/** - UI + estilos + testes
+- **hooks/** - Lógica de estado
+- **services/** - Chamadas à API
+- **mappers/** - Transformação de dados
+- **types/** - Interfaces TypeScript
+- **utils/** - Funções auxiliares
 
-- **Node.js** versão 18 ou superior
-- **npm**, **yarn**, **pnpm** ou **bun**
+### Shared Services
+**`shared/services/http/githubClient.ts`**
+- Cliente Axios configurado
+- Rate limiting (3 requisições/minuto)
+- Interceptors para tratamento de erros
+- Headers configurados para GitHub API
 
-### Instalação
+### Services por Feature
+- **repositories**: `repositorySearch.service.ts`
+- **username**: `userSearch.service.ts`
 
-1. **Clone o repositório**:
+Cada service usa o `githubClient` compartilhado.
+
+## 🌐 Rotas
+
+- **`/`** - Página inicial com menu
+- **`/repositories`** - Busca de repositórios
+- **`/username`** - Busca de usuários
+
+## 🧪 Testes
+
 ```bash
-git clone <url-do-repositorio>
-cd celso-teste
+npm test              # Executar todos os testes
+npm run test:watch    # Watch mode
+npm run test:coverage # Relatório de cobertura
 ```
 
-2. **Instale as dependências**:
-```bash
-npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
+## 📦 Build & Deploy
 
-3. **Execute o servidor de desenvolvimento**:
-```bash
-npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-```
-
-4. **Acesse a aplicação**:
-   
-   Abra [http://localhost:3000](http://localhost:3000) no seu navegador
-
-## 📜 Scripts Disponíveis
-
-```bash
-npm run dev      # Inicia o servidor de desenvolvimento
-npm run build    # Cria a build de produção
-npm run start    # Inicia o servidor de produção
-npm run lint     # Executa o linter ESLint
-```
-
-## 🏗️ Arquitetura e Padrões
-
-### Feature-Based Structure
-O projeto utiliza uma estrutura baseada em features, organizando o código por funcionalidades ao invés de tipos técnicos. Isso facilita a manutenção e escalabilidade.
-
-### Separation of Concerns
-- **Components**: Componentes de apresentação puros
-- **Hooks**: Lógica reutilizável de estado
-- **Services**: Camada de comunicação com APIs
-- **Mappers**: Transformação de dados
-- **Types**: Definições de tipos TypeScript
-
-### Rate Limiting
-A aplicação implementa um rate limiter customizado para controlar requisições à API do GitHub, evitando bloqueios por excesso de chamadas.
-
-## 🎨 Componentes Principais
-
-### SearchForm
-Formulário de busca com validação e feedback visual.
-
-### RepositoryList
-Lista de repositórios com renderização otimizada.
-
-### Card
-Card individual exibindo informações detalhadas de cada repositório.
-
-### Pagination
-Componente de navegação entre páginas de resultados.
-
-### Count
-Exibe o total de resultados encontrados.
-
-## 🔧 Configurações Importantes
-
-### API do GitHub
-A aplicação utiliza a API pública do GitHub sem autenticação. O limite de requisições é de 60 por hora por IP.
-
-### Rate Limiter
-- **Máximo de requisições**: 3 por consulta
-- **Janela de tempo**: 60 segundos
-- **Comportamento**: Bloqueia temporariamente requisições excessivas
-
-## 🌐 Deploy
-
-### Vercel (Recomendado)
-
-A maneira mais fácil de fazer deploy é usando a [Vercel Platform](https://vercel.com/new):
-
-1. Faça push do código para um repositório Git
-2. Importe o projeto na Vercel
-3. A Vercel detectará automaticamente Next.js e configurará o build
-
-### Outras Plataformas
-
-Para deploy em outras plataformas, execute:
+### Build Local
 
 ```bash
 npm run build
-npm run start
+npm start
 ```
 
-Certifique-se de que a plataforma suporta Node.js 18+ e Next.js 16.
+### Deploy
 
-## 🤝 Contribuindo
+#### Netlify
+- Configuração já incluída em `netlify.toml`
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
-5. Abra um Pull Request
-
-## 📝 Boas Práticas para Desenvolvimento
-
-- Siga os padrões do ESLint configurado
-- Utilize TypeScript para todas as novas funcionalidades
-- Mantenha componentes pequenos e focados
-- Escreva código limpo e documentado
-- Teste as funcionalidades antes de commitar
-- Use commits semânticos (feat, fix, docs, etc.)
+### API GitHub
+- Limite: 60 requisições/hora (sem auth)
+- Rate limiter interno: 3 req/minuto
+- Endpoints:
+  - `/search/repositories`
+  - `/users/{username}`
+  - `/users/{username}/repos`
 
 ## 🐛 Troubleshooting
 
-### Erro de Rate Limit
-Se você atingir o limite da API do GitHub:
-- Aguarde 1 hora para o reset automático
-- Considere implementar autenticação OAuth para aumentar o limite
+### Rate Limit Excedido
+```
+Rate limit excedido. Aguarde...
+```
+**Solução**: Aguarde 1 minuto (limiter interno) ou 1 hora (API GitHub)
 
 ### Erros de Build
 ```bash
-# Limpe o cache e reinstale dependências
 rm -rf .next node_modules
 npm install
 npm run build
 ```
 
-## 📚 Recursos Adicionais
+### Hydration Mismatch
+Já resolvido com `registry.tsx` no layout
 
-- [Documentação Next.js](https://nextjs.org/docs)
-- [API do GitHub](https://docs.github.com/en/rest)
+## 📚 Recursos
+
+- [Next.js Docs](https://nextjs.org/docs)
+- [GitHub API](https://docs.github.com/en/rest)
 - [Styled Components](https://styled-components.com/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Jest](https://jestjs.io/docs/getting-started)
 
-## 📄 Licença
+## 📝 Licença
 
-Este projeto é privado e de uso educacional.
-
----
-
-Desenvolvido com ❤️ usando Next.js
+Projeto educacional desenvolvido com Next.js 16, React 19 e TypeScript.

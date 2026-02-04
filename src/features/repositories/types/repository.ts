@@ -3,4 +3,5 @@ export interface Repository {
   name: string;
   description: string | null;
   fullName: string;
+  html_url: string;
 }

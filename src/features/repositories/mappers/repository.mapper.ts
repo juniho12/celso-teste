@@ -4,5 +4,6 @@ export function mapRepository(repo: any) {
     name: repo.name,
     description: repo.description,
     fullName: repo.full_name,
+    html_url: repo.html_url,
   };
 }

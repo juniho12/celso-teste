@@ -1,4 +1,4 @@
-import { repositorySearchClient } from "@/services/http/repositorySearchClient";
+import { githubClient } from "@/shared/services/http/githubClient";
 
 interface GetRepositoriesParams {
   query: string;
@@ -11,7 +11,7 @@ export async function getRepositories({
   page,
   perPage,
 }: GetRepositoriesParams) {
-  const response = await repositorySearchClient.get("/search/repositories", {
+  const response = await githubClient.get("/search/repositories", {
     params: {
       q: query,
       page,

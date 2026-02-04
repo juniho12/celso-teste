@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import StyledComponentsRegistry from "./registry";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -25,10 +26,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={instrumentSans.className}>
-        <a href="#main-content" className="skip-to-content">
-          Pular para o conteúdo principal
-        </a>
-        {children}
+        <StyledComponentsRegistry>
+          <a href="#main-content" className="skip-to-content">
+            Pular para o conteúdo principal
+          </a>
+          {children}
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

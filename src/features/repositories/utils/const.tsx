@@ -1,4 +1,3 @@
-
 export const COLORS = [
   '#788CFD',
   '#FF7978',

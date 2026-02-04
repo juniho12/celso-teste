@@ -1,85 +1,73 @@
-import { getRepositories } from "@/features/repositories/services/repositorySearch.service";
-import { mapRepository } from "@/features/repositories/mappers/repository.mapper";
-import RepositoryList from "@/features/repositories/components/List/List";
-import RepositoryCount from "@/features/repositories/components/Count/Count";
-import Pagination from "@/features/repositories/components/Pagination/Pagination";
-import SearchForm from "@/features/repositories/components/SearchForm/SearchForm";
-import { Header, Results, Title } from "./Global.style";
+"use client";
 
-interface PageProps {
-  searchParams?: {
-    q?: string;
-    page?: string;
-  };
-}
+import { Search, User } from "lucide-react";
+import {
+  Container,
+  Card,
+  Title,
+  Subtitle,
+  MenuGrid,
+  MenuCard,
+  MenuTitle,
+  MenuDescription,
+  AboutSection,
+  AboutTitle,
+  AboutText,
+  FeatureList,
+  FeatureItem,
+} from "./page.style";
 
-export default async function RepositoriesPage({ searchParams }: PageProps) {
-
-  const params = await searchParams;
-  const query = params?.q ?? "";
-  const page = Number(params?.page ?? 1);
-  const perPage = 8;
-
-  let repositories = [];
-  let totalPages = 0;
-  let totalCount = 0;
-
-  if (query) {
-    const data = await getRepositories({
-      query,
-      page,
-      perPage,
-    });
-
-    repositories = data.items.map(mapRepository);
-    totalPages = Math.ceil(data.total_count / perPage);
-    totalCount = data.total_count;
-  }
-
+export default function HomePage() {
   return (
-    <main id="main-content" role="main">
-      <Header role="banner">
+    <Container>
+      <Card>
         <Title>
-          <strong>Itaú GitHub</strong> <span>Repository Search</span>
+          <strong>GitHub</strong> Explorer
         </Title>
-        <img 
-          src="/github.png" 
-          alt="Logo do GitHub" 
-          width={60} 
-          height={60}
-        />
-      </Header>
+        <Subtitle>
+          Explore repositórios e perfis de usuários do GitHub de forma intuitiva e eficiente
+        </Subtitle>
 
-      <SearchForm initialQuery={query} />
-      
-      <Results 
-        role="region" 
-        aria-label="Resultados da busca"
-        aria-live="polite"
-      >
-        {query && <RepositoryCount total={totalCount} />}
+        <MenuGrid>
+          <MenuCard href="/repositories">
+            <Search />
+            <MenuTitle>Repositórios</MenuTitle>
+            <MenuDescription>
+              Busque e explore repositórios do GitHub com filtros avançados e paginação
+            </MenuDescription>
+          </MenuCard>
 
-        {query ? (
-          <RepositoryList repositories={repositories} />
-        ) : (
-          <p 
-            style={{ textAlign: 'center', padding: '40px', color: '#666' }}
-            role="status"
-            tabIndex={0}
-          >
-            Busque por repositórios para começar
-          </p>
-        )}
+          <MenuCard href="/username">
+            <User />
+            <MenuTitle>Usuários</MenuTitle>
+            <MenuDescription>
+              Visualize perfis de usuários, estatísticas e seus repositórios públicos
+            </MenuDescription>
+          </MenuCard>
+        </MenuGrid>
 
-        {totalCount > 0 &&
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            query={query}
-          />
-         }
-      </Results>
-    </main>
+        <AboutSection>
+          <AboutTitle>Sobre o Projeto</AboutTitle>
+          <AboutText>
+            Esta aplicação foi desenvolvida com Next.js 16, React 19 e TypeScript e Styled Components.
+          </AboutText>
+          
+          <FeatureList>
+            <FeatureItem>Busca de repositórios</FeatureItem>
+            <FeatureItem>Perfis de usuários</FeatureItem>
+            <FeatureItem>Lazy loading</FeatureItem>
+            <FeatureItem>Rate limiting</FeatureItem>
+            <FeatureItem>Testes unitários</FeatureItem>
+            <FeatureItem>TypeScript</FeatureItem>
+            <FeatureItem>Styled Components</FeatureItem>
+            <FeatureItem>Acessibilidade</FeatureItem>
+          </FeatureList>
+
+          <AboutText style={{ marginTop: '1.5rem' }}>
+            Desenvolvido com foco em performance, acessibilidade e experiência do usuário.
+          </AboutText>
+        </AboutSection>
+      </Card>
+    </Container>
   );
-}
 }

@@ -5,7 +5,6 @@ import {
   Container,
   Card,
   Title,
-  Subtitle,
   MenuGrid,
   MenuCard,
   MenuTitle,
@@ -24,9 +23,6 @@ export default function HomePage() {
         <Title>
           <strong>GitHub</strong> Explorer
         </Title>
-        <Subtitle>
-          Explore repositórios e perfis de usuários do GitHub de forma intuitiva e eficiente
-        </Subtitle>
 
         <MenuGrid>
           <MenuCard href="/repositories">
